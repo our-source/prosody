@@ -31,10 +31,6 @@ RUN apt-get update && \
 COPY ./host_skel.cfg.lua /etc/prosody/conf.avail/
 
 COPY ./sasl_prosody.conf /etc/sasl/prosody.conf
-COPY ./saslauthd.conf /etc/saslauthd.conf
-
-COPY ./docker-configomat/configomat.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/*
 
 # Configure supervisor
 COPY ./supervisor/* /etc/supervisor/conf.d/
