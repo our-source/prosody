@@ -14,6 +14,8 @@ RUN apt-get update && \
         lua-dbi-postgresql \
         sasl2-bin \
         lua-cyrussasl \
+        libsasl2-modules \
+        libsasl2-modules-ldap \
         openssl \
         ca-certificates \
         supervisor \
