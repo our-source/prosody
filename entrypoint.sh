@@ -14,15 +14,12 @@ sed -i "s/example.host/${DOMAINNAME}/g" $VIRTUAL_HOST
 ln -s $VIRTUAL_HOST /etc/prosody/conf.d/${DOMAINNAME}.cfg.lua
 
 # Setup the storrage driver by default sqlite3
-STORRAGE_DRIVER=${STORRAGE_DRIVER:="SQLite3"}
-STORRAGE_DATABASE=${STORRAGE_DATABASE:="prosody.sqlite"}
-
 if [ "$STORRAGE_DRIVER" == "SQLite3" ]; then
   sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
-  echo "sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\" }" >> /etc/prosody/prosody.cfg.lua
+  sed "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\" }" /etc/prosody/prosody.cfg.lua
 elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STORRAGE_USER}" ] && [ -n "${STORRAGE_PASSWORD}" ] && [ -n "${STORRAGE_HOST}" ]; then
   sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
-  echo "sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" >> /etc/prosody/prosody.cfg.lua
+  sed -i "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" /etc/prosody/prosody.cfg.lua
 fi
 
 if [[ "$1" != "prosody" ]]; then
