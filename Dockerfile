@@ -12,6 +12,8 @@ RUN apt-get update && \
         lua-dbi-sqlite3 \
         lua-dbi-mysql \
         lua-dbi-postgresql \
+        sasl2-bin \
+        lua-cyrussasl \
         openssl \
         ca-certificates \
         nano less && \
@@ -21,12 +23,14 @@ RUN apt-get update && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/{ levels = { "error" }; to = "syslog";  };/{ levels = { min = "info" }; to = "console";  };/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/c2s_require_encryption = false/c2s_require_encryption = true/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/suthentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/authentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
     chown prosody:prosody /var/run/prosody && \
     chown prosody:prosody -Rf /etc/prosody
 
 COPY host_skel.cfg.lua /etc/prosody/conf.avail/
+COPY sasl_prosody.conf /etc/sasl/prosody.conf
+COPY saslauthd.conf /etc/saslauthd.conf
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh

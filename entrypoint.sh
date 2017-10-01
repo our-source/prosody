@@ -22,6 +22,16 @@ elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STO
   sed -i "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" /etc/prosody/prosody.cfg.lua
 fi
 
+# Update ldap attributes
+sed -i "s/LDAP_SERVER/${LDAP_SERVER}/g" /etc/saslauthd.conf
+sed -i "s/LDAP_BIND_DN/${LDAP_BIND_DN}/g" /etc/saslauthd.conf
+sed -i "s/LDAP_BIND_PW/${LDAP_BIND_PW}/g" /etc/saslauthd.conf
+sed -i "s/LDAP_SEARCH_BASE/${LDAP_SEARCH_BASE}/g" /etc/saslauthd.conf
+sed -i "s/LDAP_FILTER/${LDAP_FILTER}/g" /etc/saslauthd.conf
+
+# FIXME should be guarded to keep this running on error
+/usr/sbin/saslauthd -d -a ldap -O /etc/saslauthd.conf&
+
 if [[ "$1" != "prosody" ]]; then
     exec prosodyctl $*
     exit 0;
