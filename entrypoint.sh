@@ -23,11 +23,7 @@ elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STO
 fi
 
 # Update ldap attributes
-sed -i "s/LDAP_SERVER/${LDAP_SERVER}/g" /etc/saslauthd.conf
-sed -i "s/LDAP_BIND_DN/${LDAP_BIND_DN}/g" /etc/saslauthd.conf
-sed -i "s/LDAP_BIND_PW/${LDAP_BIND_PW}/g" /etc/saslauthd.conf
-sed -i "s/LDAP_SEARCH_BASE/${LDAP_SEARCH_BASE}/g" /etc/saslauthd.conf
-sed -i "s/LDAP_FILTER/${LDAP_FILTER}/g" /etc/saslauthd.conf
+configomat.sh LDAP_ /etc/saslauthd.conf
 
 # FIXME should be guarded to keep this running on error
 /usr/sbin/saslauthd -d -a ldap -O /etc/saslauthd.conf&
@@ -41,4 +37,4 @@ if [ "$LOCAL" -a  "$PASSWORD" -a "$DOMAIN" ] ; then
     prosodyctl register $LOCAL $DOMAIN $PASSWORD
 fi
 
-exec "$@"
+supervisord -c /etc/supervisor/supervisord.conf

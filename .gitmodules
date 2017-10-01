@@ -1,0 +1,3 @@
+[submodule "docker-configomat"]
+	path = docker-configomat
+	url = https://github.com/alinmear/docker-configomat.git
