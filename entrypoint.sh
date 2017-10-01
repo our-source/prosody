@@ -9,7 +9,7 @@ if [ -z "$DOMAINNAME" ]; then
 fi
 
 VIRTUAL_HOST="/etc/prosody/conf.avail/${DOMAINNAME}.cfg.lua"
-mv /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
+cp /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
 sed -i "s/example.host/${DOMAINNAME}/g" $VIRTUAL_HOST
 ln -s $VIRTUAL_HOST /etc/prosody/conf.d/${DOMAINNAME}.cfg.lua
 
