@@ -15,7 +15,6 @@ RUN apt-get update && \
         sasl2-bin \
         lua-cyrussasl \
         libsasl2-modules \
-        libsasl2-modules-ldap \
         openssl \
         ca-certificates \
         supervisor \
