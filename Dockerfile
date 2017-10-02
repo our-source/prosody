@@ -17,8 +17,7 @@ RUN apt-get update && \
         libsasl2-modules \
         openssl \
         ca-certificates \
-        supervisor \
-        nano less && \
+        supervisor && \
     rm -rf /var/lib/apt/lists/* && \
 
     sed -i 's/daemonize = true;/daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
