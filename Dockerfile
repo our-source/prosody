@@ -32,6 +32,7 @@ RUN apt-get update && \
 COPY ./host_skel.cfg.lua /etc/prosody/conf.avail/
 
 COPY ./sasl_prosody.conf /etc/sasl/prosody.conf
+RUN adduser prosody sasl
 
 # Configure supervisor
 COPY ./supervisor/* /etc/supervisor/conf.d/
