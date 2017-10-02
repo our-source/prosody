@@ -39,7 +39,7 @@ SERVER_IPv6      | IPv6 of the jabber server
 
 Adapt this file with your FQDN. Install [docker-compose](https://docs.docker.com/compose/) in the version `1.6` or higher.
 
-__ssl support with jwilder__:
+__ssl support with jwilder and mariadb as storrage driver__:
 
 ```yaml
 version: '2'
@@ -51,6 +51,10 @@ services:
     domainname: domain.com
     container_name: jabber
     restart: always
+    depends_on:
+      - prosody_db
+      - ldap
+      - nginx_proxy
     volumes:
       - ./nginx_proxy/config/certs:/certs
     ports:
@@ -61,12 +65,41 @@ services:
       - STORRAGE_DATABASE=prosody
       - STORRAGE_USER=prosody
       - STORRAGE_PASSWORD=secret
-      - STORRAGE_HOST=prosody_db
-      - SASLAUTHD_LDAP_SERVERS=ldap://ldap.domain.com/
+      - STORRAGE_HOST=db
+      - SASLAUTHD_LDAP_SERVERS=ldap://ldap/
       - SASLAUTHD_LDAP_BIND_DN=cn=admin,dc=domain,dc=com
       - SASLAUTHD_LDAP_PASSWORD=secret
       - SASLAUTHD_LDAP_SEARCH_BASE=dc=domain,dc=com
       - SASLAUTHD_LDAP_FILTER=(&(mail=%u@%d))
+
+  db:
+    image: mariadb
+    hostname: db
+    domainname: domain.com
+    container_name: db
+    restart: always
+    volumes:
+      - ./jabber/data/db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_PASSWORD=secret
+      - MYSQL_DATABASE=prosody
+      - MYSQL_USER=prosody
+
+  ldap:
+    restart: always
+    image: jsmitsnl/docker-openldap-postfix-book:latest
+    hostname: ldap
+    domainname: domain.com
+    container_name: ldap
+    volumes:
+      - ./ldap/data:/var/lib/ldap
+      - ./ldap/config:/etc/ldap/slapd.d
+    environment:
+      - LDAP_ORGANISATION=Organisation
+      - LDAP_DOMAIN=domain.com
+      - LDAP_ADMIN_PASSWORD=secret
+      - LDAP_LOG_LEVEL=0
 
   nginx_proxy:
     image: jwilder/nginx-proxy:alpine
