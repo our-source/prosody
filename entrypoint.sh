@@ -11,7 +11,7 @@ fi
 VIRTUAL_HOST="/etc/prosody/conf.avail/${DOMAINNAME}.cfg.lua"
 cp /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
 sed -i "s/example.host/${DOMAINNAME}/g" $VIRTUAL_HOST
-ln -s $VIRTUAL_HOST /etc/prosody/conf.d/${DOMAINNAME}.cfg.lua
+cat $VIRTUAL_HOST >> /etc/prosody/prosody.cfg.lua
 
 # Setup the storrage driver by default sqlite3
 if [ "$STORRAGE_DRIVER" == "SQLite3" ]; then

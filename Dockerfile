@@ -8,6 +8,8 @@ ENV __FLUSH_LOG yes
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
+        lua-bitop \
+        lua-sec \
         lua-zlib \
         lua-dbi-sqlite3 \
         lua-dbi-mysql \
@@ -26,11 +28,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends prosody && \
     rm -rf /var/lib/apt/lists/* && \
 
-    sed -i 's/daemonize = true;/daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i '/log = {/i \daemonize = false;' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/{ levels = { "error" }; to = "syslog";  };/{ levels = { min = "info" }; to = "console";  };/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/-- "\*console";/"*console";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/c2s_require_encryption = false/c2s_require_encryption = true/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/authentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/authentication = "internal_hashed"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
 
