@@ -29,12 +29,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
 
     sed -i '/log = {/i \daemonize = false;' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/--"\bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/-- "\*console";/"*console";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/--"\mam";/"mam";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/--"\proxy65";/"proxy65";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/--"\websocket";/"websocket";/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"mam";/"mam";/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"proxy65";/"proxy65";/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"websocket";/"websocket";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/c2s_require_encryption = false/c2s_require_encryption = true/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/authentication = "internal_hashed"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
