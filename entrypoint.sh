@@ -8,23 +8,9 @@ if [ -z "$DOMAINNAME" ]; then
     exit 1;
 fi
 
-VIRTUAL_HOST="/etc/prosody/conf.avail/${DOMAINNAME}.cfg.lua"
-cp /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
-sed -i "s/example.host/${DOMAINNAME}/g" $VIRTUAL_HOST
-cat $VIRTUAL_HOST >> /etc/prosody/prosody.cfg.lua
-
-# Setup the storrage driver by default sqlite3
-if [ "$STORRAGE_DRIVER" == "SQLite3" ]; then
-  sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
-  sed "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\" }" /etc/prosody/prosody.cfg.lua
-elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STORRAGE_USER}" ] && [ -n "${STORRAGE_PASSWORD}" ] && [ -n "${STORRAGE_HOST}" ]; then
-  sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
-  sed -i "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" /etc/prosody/prosody.cfg.lua
-fi
-
 # Enable the https server
 mkdir /var/lib/prosody/http_upload
-cat >> /etc/prosody/prosody.cfg.lua << EOF
+cat >> /tmp/http_config << EOF
 
 -- Define ports
 http_ports = { 5280 }
@@ -45,6 +31,22 @@ https_ssl = {
 -- Change the default HTTP upload path
 http_upload_path = "/var/lib/prosody/http_upload";
 EOF
+
+sed -e '/----------- Virtual hosts -----------/{r /tmp/http_config' -e 'd}' /etc/prosody/prosody.cfg.lua
+
+VIRTUAL_HOST="/etc/prosody/conf.avail/${DOMAINNAME}.cfg.lua"
+cp /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
+sed -i "s/example.host/${DOMAINNAME}/g" $VIRTUAL_HOST
+cat $VIRTUAL_HOST >> /etc/prosody/prosody.cfg.lua
+
+# Setup the storrage driver by default sqlite3
+if [ "$STORRAGE_DRIVER" == "SQLite3" ]; then
+  sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
+  sed "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\" }" /etc/prosody/prosody.cfg.lua
+elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STORRAGE_USER}" ] && [ -n "${STORRAGE_PASSWORD}" ] && [ -n "${STORRAGE_HOST}" ]; then
+  sed -i 's/--storage = "sql"/storage = "sql"/g' /etc/prosody/prosody.cfg.lua
+  sed -i "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" /etc/prosody/prosody.cfg.lua
+fi
 
 # Configure ldap attributes
 cat > /etc/saslauthd.conf << EOF
