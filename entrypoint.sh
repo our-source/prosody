@@ -22,7 +22,31 @@ elif [ -n "${STORRAGE_DRIVER}" ] && [ -n "${STORRAGE_DATABASE}" ] && [ -n "${STO
   sed -i "/storage = \"sql\"/a\sql = { driver = \"${STORRAGE_DRIVER}\", database = \"${STORRAGE_DATABASE}\", username = \"${STORRAGE_USER}\", password = \"${STORRAGE_PASSWORD}\", host = \"${STORRAGE_HOST}\" }" /etc/prosody/prosody.cfg.lua
 fi
 
-# Consigure ldap attributes
+# Enable the https server
+mkdir /var/lib/prosody/http_upload
+cat >> /etc/prosody/prosody.cfg.lua << EOF
+
+-- Define ports
+http_ports = { 5280 }
+http_interfaces = { "*" }
+
+https_ports = { 5281 }
+https_interfaces = { "*" }
+
+-- Set up the default HTTP host
+default_http_host = "xmpp.${DOMAINNAME}";
+
+-- Consigure the ssl path
+https_ssl = {
+  key = "/certs/${DOMAINNAME}/key.pem";
+  certificate = "/certs/${DOMAINNAME}/fullchain.pem";
+}
+
+-- Change the default HTTP upload path
+http_upload_path = "/var/lib/prosody/http_upload";
+EOF
+
+# Configure ldap attributes
 cat > /etc/saslauthd.conf << EOF
 ldap_servers: ${SASLAUTHD_LDAP_SERVERS}
 
