@@ -32,7 +32,7 @@ https_ssl = {
 http_upload_path = "/var/lib/prosody/http_upload";
 EOF
 
-sed -e '/----------- Virtual hosts -----------/{r /tmp/http_config' -e 'd}' /etc/prosody/prosody.cfg.lua
+sed -i -e '/----------- Virtual hosts -----------/{r /tmp/http_config' -e 'd}' /etc/prosody/prosody.cfg.lua
 
 VIRTUAL_HOST="/etc/prosody/conf.avail/${DOMAINNAME}.cfg.lua"
 cp /etc/prosody/conf.avail/host_skel.cfg.lua $VIRTUAL_HOST
