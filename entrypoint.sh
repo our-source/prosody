@@ -34,7 +34,7 @@ https_ports = { 5281 }
 https_interfaces = { "*" }
 
 -- Set up the default HTTP host
-default_http_host = "xmpp.${DOMAINNAME}";
+default_http_host = "${DOMAINNAME}";
 
 -- Consigure the ssl path
 https_ssl = {
