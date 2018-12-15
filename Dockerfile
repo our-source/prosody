@@ -37,6 +37,7 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     sed -i 's/"vcard";/"cloud_notify"; -- XEP-0357: Push Notifications\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"--mam";/"mam_muc"; -- XEP-0313: Message Archive Management\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"mam";/"mam";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"proxy65";/"proxy65";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"websocket";/"websocket";/g' /etc/prosody/prosody.cfg.lua && \
@@ -50,6 +51,7 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     mv /tmp/prosody-modules/mod_filter_chatstates /usr/lib/prosody/modules/mod_filter_chatstates && \
     mv /tmp/prosody-modules/mod_smacks /usr/lib/prosody/modules/mod_smacks && \
     mv /tmp/prosody-modules/mod_cloud_notify /usr/lib/prosody/modules/mod_cloud_notify && \
+    mv /tmp/prosody-modules/mod_mam_muc /usr/lib/prosody/modules/mod_mam_muc && \
     rm -rf /opt/prosody-modules && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
 

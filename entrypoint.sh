@@ -39,7 +39,10 @@ default_storage = "sql"
 
 -- MOM settings
 archive_expires_after = "never" -- forever
-
+muc_log_by_default = true; -- Enable logging by default (can be disabled in room config)
+muc_log_all_rooms = true; -- set to true to force logging of all rooms
+-- This is the largest number of messages that are allowed to be retrieved when joining a room.
+max_history_messages = 200;
 
 EOF
 
