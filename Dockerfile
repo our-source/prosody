@@ -8,7 +8,6 @@ ENV __FLUSH_LOG yes
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
-        lua-bitop \
         lsb-release \
         sasl2-bin \
         libsasl2-modules \
@@ -21,6 +20,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         prosody \
+        lua-bitop \
         lua-cyrussasl \
         lua-dbi-sqlite3 \
         lua-dbi-mysql \
@@ -28,7 +28,6 @@ RUN apt-get update && \
         lua-sec \
         lua-zlib && \
     rm -rf /var/lib/apt/lists/* && \
-
     sed -i '/log = {/i \daemonize = false;' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
