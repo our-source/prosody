@@ -9,14 +9,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
         lua-bitop \
-        lua-sec \
-        lua-zlib \
-        lua-dbi-sqlite3 \
-        lua-dbi-mysql \
-        lua-dbi-postgresql \
         lsb-release \
         sasl2-bin \
-        lua-cyrussasl \
         libsasl2-modules \
         openssl \
         ca-certificates \
@@ -25,7 +19,14 @@ RUN apt-get update && \
     echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | tee -a /etc/apt/sources.list && \
     wget https://prosody.im/files/prosody-debian-packages.key -O- | apt-key add - && \
     apt-get update && \
-    apt-get install -y --no-install-recommends prosody && \
+    apt-get install -y --no-install-recommends \
+        prosody \
+        lua-cyrussasl \
+        lua-dbi-sqlite3 \
+        lua-dbi-mysql \
+        lua-dbi-postgresql \
+        lua-sec \
+        lua-zlib && \
     rm -rf /var/lib/apt/lists/* && \
 
     sed -i '/log = {/i \daemonize = false;' /etc/prosody/prosody.cfg.lua && \
