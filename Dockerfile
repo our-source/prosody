@@ -1,11 +1,12 @@
-FROM debian:testing
+FROM debian:stable
 
 MAINTAINER Johan Smits <johan@smitsmail.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
 
-RUN apt-get update && \
+RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
         lsb-release \
