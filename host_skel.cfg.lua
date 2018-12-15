@@ -19,7 +19,7 @@ VirtualHost "example.host"
 Component "conference.example.host" "muc"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
-Component "example.host" "proxy65"
+Component "jabber.example.host" "proxy65"
 
 ---Set up an external component (default component port is 5347)
 --Component "gateway.example.com"
