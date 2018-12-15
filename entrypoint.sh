@@ -34,6 +34,13 @@ http_upload_path = "/var/lib/prosody/http_upload";
 
 http_upload_file_size_limit = ${HTTP_FILE_UPLOAD_SIZE};
 
+# Store all data in the SQL backend
+default_storage = "sql"
+
+# MOM settings
+archive_expires_after = "never" -- forever
+
+
 EOF
 
 sed -i -e '/----------- Virtual hosts -----------/{r /tmp/http_config' -e 'd}' /etc/prosody/prosody.cfg.lua
