@@ -28,6 +28,7 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
         lua-zlib && \
     rm -rf /var/lib/apt/lists/* && \
     sed -i 's/daemonize = true;/daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"http_files";/"http_upload"; -- Enable file upload XEP-0363\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"mam";/"mam";/g' /etc/prosody/prosody.cfg.lua && \
