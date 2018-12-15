@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:testing
 
 MAINTAINER Johan Smits <johan@smitsmail.net>
 
@@ -14,11 +14,7 @@ RUN apt-get update && \
         openssl \
         ca-certificates \
         supervisor \
-        wget && \
-    echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | tee -a /etc/apt/sources.list && \
-    wget https://prosody.im/files/prosody-debian-packages.key -O- | apt-key add - && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+        wget \
         prosody \
         lua-bitop \
         lua-cyrussasl \
