@@ -25,7 +25,7 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
         lua-sec \
         lua-zlib && \
     rm -rf /var/lib/apt/lists/* && \
-    sed -i '/log = {/i \daemonize = false;' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/daemonize = true;/"daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/-- "\*console";/"*console";/g' /etc/prosody/prosody.cfg.lua && \
