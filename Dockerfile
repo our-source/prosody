@@ -4,7 +4,7 @@ MAINTAINER Johan Smits <johan@smitsmail.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
-ENV HTTP_FILE_UPLOAD_SIZE 10485760
+ENV HTTP_FILE_UPLOAD_SIZE 10 * 1024 * 1024 -- bytes
 
 RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
     apt-get update && \
