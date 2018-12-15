@@ -30,7 +30,9 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     sed -i 's/daemonize = true;/daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"http_files";/"http_upload"; -- Enable file upload XEP-0363\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/"vcard";/"carbons"; -- XEP-0280: Message Carbons\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard";/"filter_chatstates"; -- filter chat states when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/"vcard";/"throttle_presence"; -- automatically cuts down on presence traffic when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard";/"smacks"; -- XEP-0198: Reliability and fast reconnects for XMPP\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/"vcard";/"csi"; -- that allows clients to report their active\/inactive state to the server using XEP-0352\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
@@ -45,6 +47,8 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     mv /tmp/prosody-modules/mod_carbons /usr/lib/prosody/modules/mod_carbons && \
     mv /tmp/prosody-modules/mod_csi /usr/lib/prosody/modules/mod_csi && \
     mv /tmp/prosody-modules/mod_throttle_presence /usr/lib/prosody/modules/mod_throttle_presence && \
+    mv /tmp/prosody-modules/mod_filter_chatstates /usr/lib/prosody/modules/mod_filter_chatstates && \
+    mv /tmp/prosody-modules/mod_smacks /usr/lib/prosody/modules/mod_smacks && \
     rm -rf /opt/prosody-modules && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
 
