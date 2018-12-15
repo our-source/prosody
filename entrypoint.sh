@@ -9,7 +9,7 @@ if [ -z "$DOMAINNAME" ]; then
 fi
 
 # Enable the https server
-mkdir /var/lib/prosody/http_upload
+mkdir -p /var/lib/prosody/http_upload
 chown prosody /var/lib/prosody/http_upload
 cat >> /tmp/http_config << EOF
 
