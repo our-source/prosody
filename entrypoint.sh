@@ -10,6 +10,7 @@ fi
 
 # Enable the https server
 mkdir /var/lib/prosody/http_upload
+chown prosody /var/lib/prosody/http_upload
 cat >> /tmp/http_config << EOF
 
 -- Define ports
@@ -30,6 +31,10 @@ https_ssl = {
 
 -- Change the default HTTP upload path
 http_upload_path = "/var/lib/prosody/http_upload";
+
+Component "{DOMAINNAME}" "http_upload";
+http_upload_file_size_limit = {HTTP_FILE_UPLOAD_SIZE};
+
 EOF
 
 sed -i -e '/----------- Virtual hosts -----------/{r /tmp/http_config' -e 'd}' /etc/prosody/prosody.cfg.lua

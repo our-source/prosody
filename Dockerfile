@@ -4,12 +4,14 @@ MAINTAINER Johan Smits <johan@smitsmail.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
+ENV HTTP_FILE_UPLOAD_SIZE 10485760
 
 RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
         lsb-release \
+        mercurial \
         sasl2-bin \
         libsasl2-modules \
         openssl \
@@ -34,6 +36,9 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     sed -i 's/c2s_require_encryption = false/c2s_require_encryption = true/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/authentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
+    hg clone https://hg.prosody.im/prosody-modules/ /tmp/prosody-modules && \
+    mv /tmp/prosody-modules/mod_http_upload /usr/lib/prosody/modules/mod_http_upload && \
+    rm -rf /opt/prosody-modules && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
 
 COPY ./host_skel.cfg.lua /etc/prosody/conf.avail/
