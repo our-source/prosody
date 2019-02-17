@@ -1,6 +1,6 @@
 # docker-prosody
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/jsmitsnl/docker-prosody.svg)](https://hub.docker.com/r/jsmitsnl/docker-prosody/) [![Docker layers](https://images.microbadger.com/badges/image/jsmitsnl/docker-prosody.svg)](https://microbadger.com/images/jsmitsnl/docker-prosody) [![Github Stars](https://img.shields.io/github/stars/johansmitsnl/docker-prosody.svg?label=github%20%E2%98%85)](https://github.com/johansmitsnl/docker-prosody/) [![Github Stars](https://img.shields.io/github/contributors/johansmitsnl/docker-prosody.svg)](https://github.com/johansmitsnl/docker-prosody/) [![Github Forks](https://img.shields.io/github/forks/johansmitsnl/docker-prosody.svg?label=github%20forks)](https://github.com/johansmitsnl/docker-prosody/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/oursource/prosody.svg)](https://hub.docker.com/r/oursource/prosody/) [![Docker layers](https://images.microbadger.com/badges/image/oursource/prosody.svg)](https://microbadger.com/images/oursource/prosody) [![Github Stars](https://img.shields.io/github/stars/our-source/prosody.svg?label=github%20%E2%98%85)](https://github.com/our-source/prosody/) [![Github Stars](https://img.shields.io/github/contributors/our-source/prosody.svg)](https://github.com/our-source/prosody/) [![Github Forks](https://img.shields.io/github/forks/our-source/prosody.svg?label=github%20forks)](https://github.com/our-source/prosody/)
 
 This service is created to host a xmmp (jabber) server.
 The service is kept simple and easy to link to a ldap authentication backend.
@@ -9,7 +9,7 @@ The service is kept simple and easy to link to a ldap authentication backend.
 
 #### Get the latest image
 
-    docker pull jsmitsnl/docker-prosody:latest
+    docker pull oursource/prosody:latest
 
 #### DNS settings
 
@@ -46,7 +46,7 @@ version: '2'
 
 services:
   jabber:
-    image: jsmitsnl/docker-prosody:latest
+    image: oursource/prosody:latest
     hostname: jabber
     domainname: domain.com
     container_name: jabber
