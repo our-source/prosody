@@ -1,7 +1,5 @@
 FROM debian:stable
 
-MAINTAINER Johan Smits <johan@smitsmail.net>
-
 ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
 ENV HTTP_FILE_UPLOAD_SIZE 10 * 1024 * 1024 -- bytes
