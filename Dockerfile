@@ -39,6 +39,7 @@ RUN apt-get update && \
     sed -i 's/--"proxy65";/"proxy65";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"websocket";/"websocket";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/c2s_require_encryption = false/c2s_require_encryption = true/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/authentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/authentication = "internal_hashed"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
     hg clone https://hg.prosody.im/prosody-modules/ /tmp/prosody-modules && \
