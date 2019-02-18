@@ -43,6 +43,7 @@ RUN apt-get update && \
     sed -i 's/authentication = "internal_hashed"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
     hg clone https://hg.prosody.im/prosody-modules/ /tmp/prosody-modules && \
+    mv /tmp/prosody-modules/mod_carbons /usr/lib/prosody/modules/mod_carbons && \
     mv /tmp/prosody-modules/mod_http_upload /usr/lib/prosody/modules/mod_http_upload && \
     mv /tmp/prosody-modules/mod_csi /usr/lib/prosody/modules/mod_csi && \
     mv /tmp/prosody-modules/mod_throttle_presence /usr/lib/prosody/modules/mod_throttle_presence && \
