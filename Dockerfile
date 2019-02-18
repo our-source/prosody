@@ -4,9 +4,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
 ENV HTTP_FILE_UPLOAD_SIZE 10 * 1024 * 1024 -- bytes
 
-RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends -t stretch-backports \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
         gnupg2 \
         lsb-release \
         mercurial \
@@ -49,6 +48,7 @@ RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/s
     mv /tmp/prosody-modules/mod_filter_chatstates /usr/lib/prosody/modules/mod_filter_chatstates && \
     mv /tmp/prosody-modules/mod_smacks /usr/lib/prosody/modules/mod_smacks && \
     mv /tmp/prosody-modules/mod_cloud_notify /usr/lib/prosody/modules/mod_cloud_notify && \
+    mv /tmp/prosody-modules/mod_mam /usr/lib/prosody/modules/mod_mam && \
     mv /tmp/prosody-modules/mod_mam_muc /usr/lib/prosody/modules/mod_mam_muc && \
     rm -rf /opt/prosody-modules && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
