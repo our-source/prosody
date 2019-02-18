@@ -53,6 +53,8 @@ RUN apt-get update && \
     mv /tmp/prosody-modules/mod_mam /usr/lib/prosody/modules/mod_mam && \
     mv /tmp/prosody-modules/mod_mam_muc /usr/lib/prosody/modules/mod_mam_muc && \
     rm -rf /opt/prosody-modules && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
 
 COPY ./host_skel.cfg.lua /etc/prosody/conf.avail/
