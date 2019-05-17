@@ -2,7 +2,12 @@
 set -e
 
 # Setup the host for the environment
-DOMAINNAME="$(hostname -d)"
+if [ -z "$DOMAIN" ]; then
+  DOMAINNAME="$(hostname -d)"
+else
+  DOMAINNAME=$DOMAIN
+fi
+
 if [ -z "$DOMAINNAME" ]; then
     echo "The domain is not set"
     exit 1;
