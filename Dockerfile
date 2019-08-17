@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:bullseye-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV __FLUSH_LOG yes
@@ -8,14 +8,13 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gnupg2 \
         lsb-release \
-        mercurial \
         sasl2-bin \
         libsasl2-modules \
         openssl \
         ca-certificates \
         supervisor \
-        wget \
         prosody \
+        prosody-modules \
         lua-bitop \
         lua-cyrussasl \
         lua-dbi-sqlite3 \
@@ -26,15 +25,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     sed -i 's/daemonize = true;/daemonize = false;/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"http_files";/"http_upload"; -- Enable file upload XEP-0363\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"carbons"; -- XEP-0280: Message Carbons\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"filter_chatstates"; -- filter chat states when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"throttle_presence"; -- automatically cuts down on presence traffic when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"smacks"; -- XEP-0198: Reliability and fast reconnects for XMPP\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"csi"; -- that allows clients to report their active\/inactive state to the server using XEP-0352\n                &/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"vcard";/"cloud_notify"; -- XEP-0357: Push Notifications\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard_legacy";/"filter_chatstates"; -- filter chat states when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard_legacy";/"throttle_presence"; -- automatically cuts down on presence traffic when clients indicate they are inactive\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard_legacy";/"smacks"; -- XEP-0198: Reliability and fast reconnects for XMPP\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/"vcard_legacy";/"cloud_notify"; -- XEP-0357: Push Notifications\n                &/g' /etc/prosody/prosody.cfg.lua && \
+    sed -i 's/--"csi_simple";/"csi_simple";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"bosh";/"bosh";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/--"compression";/"compression";/g' /etc/prosody/prosody.cfg.lua && \
-    sed -i 's/"--mam";/"mam_muc"; -- XEP-0313: Message Archive Management\n                &/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"mam";/"mam";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"proxy65";/"proxy65";/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/--"websocket";/"websocket";/g' /etc/prosody/prosody.cfg.lua && \
@@ -42,17 +38,6 @@ RUN apt-get update && \
     sed -i 's/authentication = "internal_plain"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     sed -i 's/authentication = "internal_hashed"/authentication = "cyrus"/g' /etc/prosody/prosody.cfg.lua && \
     mkdir /var/run/prosody && \
-    hg clone https://hg.prosody.im/prosody-modules/ /tmp/prosody-modules && \
-    mv /tmp/prosody-modules/mod_carbons /usr/lib/prosody/modules/mod_carbons && \
-    mv /tmp/prosody-modules/mod_http_upload /usr/lib/prosody/modules/mod_http_upload && \
-    mv /tmp/prosody-modules/mod_csi /usr/lib/prosody/modules/mod_csi && \
-    mv /tmp/prosody-modules/mod_throttle_presence /usr/lib/prosody/modules/mod_throttle_presence && \
-    mv /tmp/prosody-modules/mod_filter_chatstates /usr/lib/prosody/modules/mod_filter_chatstates && \
-    mv /tmp/prosody-modules/mod_smacks /usr/lib/prosody/modules/mod_smacks && \
-    mv /tmp/prosody-modules/mod_cloud_notify /usr/lib/prosody/modules/mod_cloud_notify && \
-    mv /tmp/prosody-modules/mod_mam /usr/lib/prosody/modules/mod_mam && \
-    mv /tmp/prosody-modules/mod_mam_muc /usr/lib/prosody/modules/mod_mam_muc && \
-    rm -rf /opt/prosody-modules && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     chown prosody:prosody -Rf /etc/prosody /var/run/prosody
