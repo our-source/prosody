@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0
+
+* New image based on Bullseye
+* SASLAUTHD_LDAP_FILTER has a __breaking change__, if the domain is used
+  you will need to change this to: "%u@%r"
+
 ## v2.2.0
 
 * Do not use the backport version of prosody, this is broken with sasl
