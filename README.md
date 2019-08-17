@@ -71,7 +71,7 @@ services:
       - SASLAUTHD_LDAP_BIND_DN=cn=admin,dc=domain,dc=com
       - SASLAUTHD_LDAP_PASSWORD=secret
       - SASLAUTHD_LDAP_SEARCH_BASE=dc=domain,dc=com
-      - SASLAUTHD_LDAP_FILTER=(&(mail=%u@%d))
+      - SASLAUTHD_LDAP_FILTER=(&(mail=%u@%r))
       - HTTP_FILE_UPLOAD_SIZE=10485760
 
   db:
