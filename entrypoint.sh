@@ -82,6 +82,11 @@ ldap_referrals: yes
 log_level: 10
 EOF
 
+if [[ "$1" = "bash" ]]; then
+    exec bash
+    exit 0;
+fi
+
 if [[ "$1" != "prosody" ]]; then
     exec prosodyctl $*
     exit 0;
